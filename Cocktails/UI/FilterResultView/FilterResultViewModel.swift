@@ -2,27 +2,31 @@ import SwiftUI
 
 class FilterResultViewModel: ObservableObject {
 
-    private let debounce: UInt64 = 100_000_000
+    private let debounceInNanoseconds: UInt64 = 20_000_000
 
     @Published var presentableItems: [CocktailDataModel] = []
 
     private let cocktailService: CocktailServiceProtocol
-    private let itemIds: [String]
 
     private var fetchingDataTask: Task<Void, Error>?
 
-    init(cocktailService: CocktailServiceProtocol, itemIds: [String]) {
-        self.itemIds = itemIds
-        self.cocktailService = cocktailService
+    private var itemIds: [String] = []
 
-        fetchingDataTask = Task {
-            try await fetchModels(for: itemIds)
-        }
+    init(cocktailService: CocktailServiceProtocol) {
+        self.cocktailService = cocktailService
     }
 
-    func startFetchingTask() {
+    func set(items: [String]) {
+        guard itemIds != items else { return }
+
+        itemIds.removeAll()
+        itemIds = items
+        startFetchingTask(for: items)
+    }
+
+    func startFetchingTask(for items: [String]) {
         fetchingDataTask = Task {
-            try await fetchModels(for: itemIds)
+            try await fetchModels(for: items)
         }
     }
 
@@ -31,8 +35,12 @@ class FilterResultViewModel: ObservableObject {
     }
 
     private func fetchModels(for ids: [String]) async throws {
+        await MainActor.run {
+            presentableItems.removeAll()
+        }
+
         try await ids.asyncForEach { id in
-            try await Task.sleep(nanoseconds: debounce)
+            try await Task.sleep(nanoseconds: debounceInNanoseconds)
             guard let model = try await cocktailService
                 .fetchDetails(for: id)
                 .first else { return }

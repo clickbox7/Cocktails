@@ -7,7 +7,6 @@ class FilterViewModel: ObservableObject {
     @Published var categoryTypeFilters: [FilterDataModel] = []
     @Published var glassTypeFilters: [FilterDataModel] = []
     @Published var selectedFilters: [FilterDataModel] = []
-    @Published var cocktailDataModels: [CocktailDataModel] = []
 
     @Published var isAlcoholicTypeGroupExpanded: Bool = false
     @Published var isCategoryGroupExpanded: Bool = false
@@ -82,6 +81,7 @@ class FilterViewModel: ObservableObject {
 
     func resetFilters() {
         selectedFilters.removeAll()
+        collapseGroups()
     }
 
     func collapseGroups() {

@@ -60,9 +60,7 @@ struct FilterView: View {
                 }
             }
         }
-        .onDisappear {
-            viewModel.collapseGroups()
-        }
+        .onDisappear(perform: viewModel.collapseGroups)
     }
 
     private func filterView(title: String, items: [FilterDataModel], isExpanded: Binding<Bool>) -> some View {

@@ -16,25 +16,23 @@ class AppRouter: ObservableObject {
             detailsView(model: model)
         case .filter:
             filterView()
-        case .filterResults(itemIds: let itemIds):
+        case .filterResults(let itemIds):
             filterResultView(itemIds: itemIds)
         }
     }
 
-    @MainActor
     func detailsView(model: CocktailDataModel) -> some View {
         let viewModel = CocktailDetailsViewModel(cocktailDataModel: model)
         return CocktailDetailsView(viewModel: viewModel)
     }
 
-    @MainActor
     func filterView() -> some View {
         return FilterView(viewModel: ViewModelLocator.factory.filterViewModel)
     }
 
-    @MainActor
     func filterResultView(itemIds: [String]) -> some View {
-        let viewModel = FilterResultViewModel(cocktailService: ServiceLocator.factory.cocktailService, itemIds: itemIds)
+        let viewModel = ViewModelLocator.factory.filterResultsViewModel
+        viewModel.set(items: itemIds)
         return FilterResultView(viewModel: viewModel)
     }
 

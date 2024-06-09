@@ -17,4 +17,8 @@ class ViewModelFactory {
         FilterViewModel(filterService: ServiceLocator.factory.filterService)
     }()
 
+    let filterResultsViewModel: FilterResultViewModel = {
+        FilterResultViewModel(cocktailService: ServiceLocator.factory.cocktailService)
+    }()
+
 }
