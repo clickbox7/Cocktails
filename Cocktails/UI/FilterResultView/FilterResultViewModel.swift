@@ -26,6 +26,10 @@ class FilterResultViewModel: ObservableObject {
 
     func startFetchingTask(for items: [String]) {
         fetchingDataTask = Task {
+            await MainActor.run {
+                presentableItems.removeAll()
+            }
+
             try await fetchModels(for: items)
         }
     }
@@ -35,10 +39,6 @@ class FilterResultViewModel: ObservableObject {
     }
 
     private func fetchModels(for ids: [String]) async throws {
-        await MainActor.run {
-            presentableItems.removeAll()
-        }
-
         try await ids.asyncForEach { id in
             try await Task.sleep(nanoseconds: debounceInNanoseconds)
             guard let model = try await cocktailService
