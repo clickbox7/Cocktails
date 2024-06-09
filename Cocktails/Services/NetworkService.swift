@@ -61,7 +61,7 @@ class NetworkService: NetworkServiceProtocol {
         else { throw NetworkServiceError.malformedURL }
 
         components.path = path
-        components.queryItems = query.map { (key, value) in
+        components.queryItems = query.map { key, value in
             URLQueryItem(name: key, value: value)
         }
 

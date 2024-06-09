@@ -2,7 +2,7 @@ import SwiftUI
 
 class FilterResultViewModel: ObservableObject {
 
-    private let debounceInNanoseconds: UInt64 = 20_000_000
+    private let debounceInNanoseconds: UInt64 = 100_000_000
 
     @Published var presentableItems: [CocktailDataModel] = []
 
