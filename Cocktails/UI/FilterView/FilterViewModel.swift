@@ -1,6 +1,5 @@
 import SwiftUI
 
-@MainActor
 class FilterViewModel: ObservableObject {
 
     @Published var alcoholicTypeFilters: [FilterDataModel] = []

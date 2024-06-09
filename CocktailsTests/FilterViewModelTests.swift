@@ -6,7 +6,6 @@ final class FilterViewModelTests: XCTestCase {
     var filterService: FilterServiceMock!
     var viewModel: FilterViewModel!
 
-    @MainActor
     override func setUp() {
         super.setUp()
 
@@ -18,7 +17,6 @@ final class FilterViewModelTests: XCTestCase {
         super.tearDown()
     }
 
-    @MainActor
     func testFetchingAlcoholicTypeFilters() async throws {
         try await viewModel.fetchFilters(for: .alcoholicType)
         let mock = MockData
@@ -26,7 +24,6 @@ final class FilterViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.alcoholicTypeFilters.count, mock.count)
     }
 
-    @MainActor
     func testFetchingCategoryTypeFilters() async throws {
         try await viewModel.fetchFilters(for: .category)
         let mock = MockData
@@ -34,20 +31,17 @@ final class FilterViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.categoryTypeFilters.count, mock.count)
     }
 
-    @MainActor
     func testFilterSelection() {
         viewModel.select(MockData.alcoholicTypeFilters[0])
         XCTAssertEqual(viewModel.selectedFilters.count, 1)
     }
 
-    @MainActor
     func testSameTypeFilterSelection() {
         viewModel.select(MockData.alcoholicTypeFilters[0])
         viewModel.select(MockData.alcoholicTypeFilters[1])
         XCTAssertEqual(viewModel.selectedFilters.count, 1)
     }
 
-    @MainActor
     func testFilteringData() async throws {
         viewModel.selectedFilters.append(MockData.alcoholicTypeFilters[0])
         let cocktails = try await viewModel.filterData()

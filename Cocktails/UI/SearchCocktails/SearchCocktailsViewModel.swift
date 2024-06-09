@@ -1,5 +1,6 @@
 import SwiftUI
 
+@MainActor
 class SearchCocktailsViewModel: ObservableObject {
 
     @Published var filter: String = ""
@@ -15,14 +16,12 @@ class SearchCocktailsViewModel: ObservableObject {
         }
     }
 
-    @MainActor
     func queryItems(with filter: String = "") async throws {
         searchItems = try await cocktailService
             .queryItems(with: filter)
             .map { CocktailDataModel(from: $0) }
     }
 
-    @MainActor
     func fetchRandomItem() async throws -> CocktailDataModel? {
         guard let model =  try await cocktailService.fetchRandom().first else { return nil }
 
