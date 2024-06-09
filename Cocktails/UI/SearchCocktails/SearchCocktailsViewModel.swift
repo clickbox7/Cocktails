@@ -1,4 +1,3 @@
-import Combine
 import SwiftUI
 
 class SearchCocktailsViewModel: ObservableObject {
@@ -7,8 +6,6 @@ class SearchCocktailsViewModel: ObservableObject {
     @Published var searchItems: [CocktailDataModel] = []
 
     private let cocktailService: CocktailServiceProtocol
-
-    private var disposables: Set<AnyCancellable> = []
 
     init(cocktailService: CocktailServiceProtocol) {
         self.cocktailService = cocktailService
