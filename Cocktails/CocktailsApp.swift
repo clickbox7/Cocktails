@@ -3,7 +3,7 @@ import SwiftUI
 @main
 struct CocktailsApp: App {
 
-    @StateObject var appRouter: AppRouter = AppRouter()
+    @StateObject private var appRouter: AppRouter = AppRouter()
 
     var body: some Scene {
         WindowGroup {

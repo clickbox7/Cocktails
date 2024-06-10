@@ -27,7 +27,7 @@ class AppRouter: ObservableObject {
     }
 
     func filterView() -> some View {
-        return FilterView(viewModel: ViewModelLocator.factory.filterViewModel)
+        FilterView(viewModel: ViewModelLocator.factory.filterViewModel)
     }
 
     func filterResultView(itemIds: [String]) -> some View {
